@@ -1,0 +1,11 @@
+# 大型媒體檔不進倉庫（GitHub 單檔上限 100MB）
+*.m4a
+*.mp3
+*.mp4
+*.webm
+*.wav
+
+# Python / 暫存
+__pycache__/
+*.pyc
+.DS_Store
