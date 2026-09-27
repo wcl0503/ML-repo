@@ -9,3 +9,6 @@
 __pycache__/
 *.pyc
 .DS_Store
+
+# 語音電子報成品例外納入
+!docs/podcast/*.mp3
