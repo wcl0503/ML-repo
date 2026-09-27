@@ -1,0 +1,548 @@
+<title>郭育仁方法論</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F5F6F2; --paper:#FFFFFF; --ink:#18222C; --ink-2:#4E5964; --ink-3:#7B858E;
+  --rule:#D8DCD6; --rule-soft:#E8EBE5;
+  --struct:#1E5687; --struct-soft:#E3ECF4; --struct-ink:#174267;
+  --intu:#A86A15; --intu-soft:#F6EBDA; --intu-ink:#7C4E0F;
+  --hit:#2F7A4C; --hit-soft:#E2F0E6; --miss:#A63D36; --miss-soft:#F5E3E1;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",Georgia,serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0F1418; --paper:#161C22; --ink:#E4E8EB; --ink-2:#AEB7BF; --ink-3:#7F8991;
+    --rule:#2A333B; --rule-soft:#1F272E;
+    --struct:#6FA6D8; --struct-soft:#17263A; --struct-ink:#A8CBEA;
+    --intu:#DDA24C; --intu-soft:#2E2414; --intu-ink:#EEC58A;
+    --hit:#6FBF8A; --hit-soft:#16281D; --miss:#E08078; --miss-soft:#31181A;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0F1418; --paper:#161C22; --ink:#E4E8EB; --ink-2:#AEB7BF; --ink-3:#7F8991;
+  --rule:#2A333B; --rule-soft:#1F272E;
+  --struct:#6FA6D8; --struct-soft:#17263A; --struct-ink:#A8CBEA;
+  --intu:#DDA24C; --intu-soft:#2E2414; --intu-ink:#EEC58A;
+  --hit:#6FBF8A; --hit-soft:#16281D; --miss:#E08078; --miss-soft:#31181A;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+a{color:var(--struct);text-decoration-thickness:1px;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--struct);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-block:0 96px;padding-inline:20px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+
+/* header */
+.masthead{padding-block:56px 40px;border-bottom:1px solid var(--rule)}
+.masthead h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,4.6vw,52px);line-height:1.2;margin:14px 0 18px;text-wrap:balance;letter-spacing:.01em}
+.masthead p.lede{font-size:18px;color:var(--ink-2);max-width:40em;margin:0 0 28px}
+.meta{display:flex;flex-wrap:wrap;gap:10px 28px;font-size:13px;color:var(--ink-3)}
+.meta b{color:var(--ink-2);font-weight:500}
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.tag{display:inline-flex;align-items:center;gap:8px;font-size:13px;padding:5px 12px;border-radius:999px;font-weight:500}
+.tag::before{content:"";width:9px;height:9px;border-radius:50%;background:currentColor}
+.tag.s{background:var(--struct-soft);color:var(--struct-ink)}
+.tag.i{background:var(--intu-soft);color:var(--intu-ink)}
+
+/* layout */
+.grid{display:grid;grid-template-columns:230px minmax(0,1fr);gap:56px;align-items:start;margin-top:40px}
+nav.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 24px);font-size:13.5px}
+nav.toc ol{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:2px;border-left:1px solid var(--rule)}
+nav.toc a{display:block;padding:6px 14px;color:var(--ink-2);text-decoration:none;border-left:2px solid transparent;margin-left:-1px}
+nav.toc a:hover{color:var(--ink);border-left-color:var(--ink-3)}
+nav.toc .sub a{padding-left:26px;font-size:12.5px;color:var(--ink-3)}
+main{min-width:0}
+main > section{padding-block:12px 40px;border-bottom:1px solid var(--rule-soft)}
+main > section:last-child{border-bottom:0}
+h2{font-family:var(--serif);font-weight:700;font-size:clamp(24px,2.6vw,32px);line-height:1.3;margin:28px 0 10px;text-wrap:balance}
+h2 .num{font-family:var(--mono);font-weight:500;font-size:14px;color:var(--ink-3);display:block;margin-bottom:6px;letter-spacing:.08em}
+h3{font-family:var(--sans);font-weight:700;font-size:19px;margin:34px 0 8px;line-height:1.4}
+h4{font-size:16px;font-weight:700;margin:22px 0 6px;color:var(--ink)}
+p{margin:0 0 16px;max-width:68ch}
+ul,ol{padding-left:1.3em;margin:0 0 16px;max-width:68ch}
+li{margin-bottom:8px}
+li::marker{color:var(--ink-3)}
+strong{font-weight:700}
+.note{font-size:14px;color:var(--ink-2);border-left:3px solid var(--rule);padding:6px 16px;margin:18px 0;max-width:68ch}
+
+/* key findings */
+.findings{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:22px 0 8px}
+.finding{background:var(--paper);border:1px solid var(--rule);padding:18px 20px 16px;border-radius:6px}
+.finding .k{font-family:var(--mono);font-size:12px;color:var(--ink-3);letter-spacing:.1em;margin-bottom:8px}
+.finding p{font-size:14.5px;margin:0;line-height:1.7}
+.finding.s{border-top:3px solid var(--struct)}
+.finding.i{border-top:3px solid var(--intu)}
+
+/* quotes */
+blockquote{margin:22px 0;padding:18px 22px;background:var(--paper);border:1px solid var(--rule);border-radius:6px;max-width:72ch;font-family:var(--serif);font-size:16.5px;line-height:1.9}
+blockquote p{margin:0 0 10px;max-width:none}
+blockquote p:last-child{margin:0}
+blockquote cite{display:block;margin-top:12px;font-family:var(--mono);font-style:normal;font-size:12px;color:var(--ink-3)}
+blockquote.i{border-left:4px solid var(--intu)}
+blockquote.s{border-left:4px solid var(--struct)}
+q{quotes:"「" "」"}
+
+/* tables */
+.tbl{overflow-x:auto;margin:18px 0 22px;border:1px solid var(--rule);border-radius:6px;background:var(--paper)}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.6}
+th,td{padding:11px 14px;border-bottom:1px solid var(--rule-soft);vertical-align:top;text-align:left}
+th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:500;background:var(--bg);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+td.mono{white-space:nowrap}
+.tbl.compact td,.tbl.compact th{padding:8px 10px;font-size:13px}
+
+/* steps */
+.steps{list-style:none;padding:0;margin:20px 0;display:flex;flex-direction:column;gap:0;max-width:none;counter-reset:step}
+.step{display:grid;grid-template-columns:44px minmax(0,1fr);gap:16px;padding:18px 0;border-top:1px solid var(--rule-soft)}
+.step:last-child{border-bottom:1px solid var(--rule-soft)}
+.step .n{font-family:var(--mono);font-size:22px;font-weight:500;color:var(--struct);line-height:1.1;padding-top:2px}
+.step h4{margin:0 0 6px;font-size:16.5px}
+.step p{font-size:15px;margin:0 0 8px;max-width:70ch}
+.step .ex{font-family:var(--serif);font-size:14.5px;color:var(--ink-2);margin:0;max-width:70ch}
+.step .ex b{font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.1em;color:var(--ink-3);margin-right:8px}
+
+/* actor models */
+.actors{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:18px 0}
+.actor{background:var(--paper);border:1px solid var(--rule);border-radius:6px;padding:16px 18px}
+.actor h4{margin:0 0 6px;font-size:15px}
+.actor p{font-size:14px;margin:0;color:var(--ink-2);line-height:1.7}
+
+/* hit/miss */
+.hm{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
+.hm > div{border-radius:6px;padding:16px 18px;border:1px solid var(--rule)}
+.hm .hit{background:var(--hit-soft)} .hm .miss{background:var(--miss-soft)}
+.hm h4{margin:0 0 10px;font-size:14px;letter-spacing:.04em}
+.hm .hit h4{color:var(--hit)} .hm .miss h4{color:var(--miss)}
+.hm ul{margin:0;padding-left:1.1em;max-width:none;font-size:14px}
+.hm li{margin-bottom:8px;line-height:1.65}
+.hm .d{font-family:var(--mono);font-size:12px;color:var(--ink-3);margin-right:6px}
+
+/* techniques */
+.tech{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin:18px 0}
+.tech > div{background:var(--paper);border:1px solid var(--rule);border-radius:6px;padding:16px 18px}
+.tech h4{margin:0 0 6px;font-size:15px}
+.tech p{font-size:14px;margin:0;color:var(--ink-2)}
+.tech q{font-family:var(--serif);color:var(--ink)}
+
+/* plan */
+.phase{margin:22px 0;padding:0 0 0 18px;border-left:3px solid var(--intu)}
+.phase.s{border-left-color:var(--struct)}
+.phase h4{margin:0 0 8px}
+.phase ul{margin:0}
+.checklist{columns:2;column-gap:32px;font-size:14.5px;max-width:none}
+.checklist li{break-inside:avoid}
+
+/* sources */
+.src{font-size:13.5px;max-width:none}
+.src li{margin-bottom:5px;overflow-wrap:anywhere}
+.src h4{margin-top:18px}
+details summary{cursor:pointer;font-weight:700;padding:8px 0}
+.foot{margin-top:48px;padding-top:20px;border-top:1px solid var(--rule);font-size:13px;color:var(--ink-3)}
+
+@media (max-width:860px){
+  .grid{grid-template-columns:1fr;gap:20px}
+  nav.toc{position:static}
+  nav.toc ol{flex-direction:row;flex-wrap:wrap;border-left:0;gap:6px}
+  nav.toc a{border:1px solid var(--rule);border-radius:999px;padding:5px 12px;margin:0}
+  nav.toc .sub{display:none}
+  .hm{grid-template-columns:1fr}
+  .checklist{columns:1}
+  .masthead{padding-block:36px 28px}
+}
+@media (prefers-reduced-motion:no-preference){ html{scroll-behavior:smooth} }
+</style>
+
+<div class="wrap">
+<header class="masthead">
+  <div class="eyebrow">分析報告 · 2026 年 9 月</div>
+  <h1>郭育仁的分析方法論：結構思考與專家直覺的反向工程</h1>
+  <p class="lede">從 38 支影片、10 份完整逐字稿與約 60 個文字來源，拆解國策研究院副院長郭育仁怎麼下判斷、哪裡準、哪裡不準，以及一個人要怎麼把這套能力練起來。</p>
+  <div class="meta">
+    <span><b>分析對象</b> 國策研究院副院長、中山大學中國與亞太區域研究所所長</span>
+    <span><b>素材</b> 播放清單 38 支影片、10 份逐字稿、60 個文字來源</span>
+    <span><b>期間</b> 2022 – 2026</span>
+  </div>
+  <div class="legend">
+    <span class="tag s">結構：可以被寫成流程的部分</span>
+    <span class="tag i">直覺：流程做了幾千次之後的快取</span>
+  </div>
+</header>
+
+<div class="grid">
+<nav class="toc" aria-label="目錄">
+  <ol>
+    <li><a href="#s0">一頁結論</a></li>
+    <li><a href="#s1">他是誰</a></li>
+    <li><a href="#s2">七個核心命題</a></li>
+    <li><a href="#s3">結構：實際的回答順序</a></li>
+    <li><a href="#s4">逐字稿才看得到的手法</a></li>
+    <li><a href="#s5">直覺從哪裡來</a></li>
+    <li class="sub"><a href="#s5b">命中與失準</a></li>
+    <li class="sub"><a href="#s5c">他自己的一次失準</a></li>
+    <li><a href="#s6">如何培養</a></li>
+    <li><a href="#s7">一句話版本</a></li>
+    <li><a href="#a1">附錄：38 支影片</a></li>
+    <li><a href="#a2">附錄：文字來源</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<section id="s0">
+  <h2><span class="num">00</span>一頁結論</h2>
+  <div class="findings">
+    <div class="finding s">
+      <div class="k">結構是一套固定順序</div>
+      <p>先澄清定義、先給結論，再用日期索引文件、畫出結構與地理、算各方利益、用數字否證、推到下一個政治節點，最後用三分法收束。每一場發言幾乎都能對回這個順序。</p>
+    </div>
+    <div class="finding i">
+      <div class="k">直覺是壓縮過的結構</div>
+      <p>十五年以上、極窄領域（日本防衛政策文件、美日同盟制度、預算與軍售數字）反覆閱讀後形成的型態辨識庫。在制度性、有時程的問題上命中率高，在人事與選舉結果上明顯較差。</p>
+    </div>
+    <div class="finding">
+      <div class="k">他的自我定義</div>
+      <p>「第一個我非常重視的是專家直覺……那是錢買不到的。第二個我們追求的是結構變因，不是那種細節。」使用者的觀察不是外人印象，而是他親口說的方法。</p>
+    </div>
+    <div class="finding">
+      <div class="k">怎麼變成那樣的人</div>
+      <p>選一個窄到能讀完所有一手文件的領域，把流程背下來，建自己的數字庫與時間軸，公開下判斷並誠實記錄對錯，經營能給你隱性知識的人脈，然後給自己十年。</p>
+    </div>
+  </div>
+  <p class="note">第一輪分析用文字報導與座談紀錄反推出六個步驟。第二輪用 10 支有人工字幕影片的逐字稿逐句編碼，六步全部成立，但順序、內容與資訊來源都做了修正。本頁呈現的是修正後的版本。其餘 27 支影片沒有可下載字幕，尚未納入。</p>
+</section>
+
+<section id="s1">
+  <h2><span class="num">01</span>他是誰：訓練背景決定了工具箱</h2>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>項目</th><th>事實</th><th>對方法論的意義</th></tr></thead>
+      <tbody>
+        <tr><td>出身與學位</td><td>台南人，政治大學畢業，海軍服役兩年，先到柏克萊讀研究所，再轉南加州大學取得政治學博士，約 2009 至 2010 年返台</td><td>海軍經歷讓他能從軍事實務下判斷（「通過操演不是軍演」）；美式政治學訓練：制度、行為者、利益</td></tr>
+        <tr><td>博士論文起點</td><td>在美國期間創業、考取賽車執照，為履行對母親的承諾回校完成博士。選題「軍工業」是因為對機械有熱忱且文組教授難以挑戰。觸發點是俄羅斯潛艦在日本外海被漁網纏住，「全世界機器人王國」日本卻沒有水下救難機器人，於是研究美日國防工業合作</td><td>核心領域是從一個具體的反差現象切入，不是從理論切入</td></tr>
+        <tr><td>早期研究</td><td>日本歷次《防衛計畫大綱》（2010、2013、四期比較、五期）、集體自衛權法制化、新安保法、日本國防工業改革，2014 至 2022 年發表於《政治科學論叢》《問題與研究》《政治學報》《全球政治評論》</td><td>研究單位是「文件的制定過程」而不是「事件」，這是日後「以文本為錨」的根</td></tr>
+        <tr><td>日本經歷</td><td>東京大學社會科學研究所研究員、日本國際問題研究所訪問研究員（2016，題目為美日與美韓同盟制度比較）</td><td>能直接讀日文一手資料，熟悉日本政官分工</td></tr>
+        <tr><td>智庫與公職</td><td>2016 年加入國策研究院，執行長七年、副院長三年，全球風險評估小組召集人；陸委會諮詢委員、海基會顧問、當代日本研究學會理事長；曾向日本防衛省、美國國務院、法國國防部簡報</td><td>長期接觸決策端，取得「哪些數字重要」的隱性知識</td></tr>
+        <tr><td>學生描述</td><td>「不喜歡繁文縟節，也不喜歡開毫無效率又沒有結論的會議，最喜歡講一針見血的實話」；課程要求「大量閱讀與批判思考」</td><td>輸出風格：結論先行、拒絕模糊</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>重點在於他的專業非常窄：日本防衛政策與美日同盟。他以這個窄核心向外擴到印太安全與兩岸。這是專家直覺能形成的先決條件，寬泛的「國際關係評論員」形成不了。</p>
+</section>
+
+<section id="s2">
+  <h2><span class="num">02</span>他反覆講的七個核心命題</h2>
+  <p>從 2023 到 2026 年的發言可以壓縮成七個他一再回到的命題。認識這些命題，就能預測他對新事件會怎麼講。</p>
+  <ol>
+    <li><strong>結構變因大於人物變因。</strong> 「結構變因強度遠大於『總統是誰』的變因強度，相信川普的政策方向不會偏離拜登政府，只是施政風格不同」；「形勢比人強，基本上由不得李在明」；「弱勢的日本首相比起受到中國影響，更容易受美國影響」。</li>
+    <li><strong>台海安全已經結構化、機制化，中共因此無計可施。</strong> 美日韓、美日澳菲、AUKUS 與 Quad 與 Squad；「中共被多面圍堵，可能就無計可施，碰壁的機率在未來會越來越高」。</li>
+    <li><strong>「沒有印太了」，只剩第一島鏈與台灣安全這兩個軍事目標。</strong> 從美國《國家安全戰略》與《國防戰略》讀出美國由「軸輻體系」轉為「網格式盟友結構」，以水平整合加垂直整合把朝鮮半島到南海變成單一戰區。</li>
+    <li><strong>台灣是地球上最難打的戰場，所以中共改走蟒蛇戰略與認知戰。</strong> 直接犯台機率極低；真正的風險是灰區、法律戰三階段，以及讓台灣人「從無感到無力再到絕望」。</li>
+    <li><strong>防衛目標不是制海制空，而是拒止登陸。</strong> 「只要讓對手無法順利登陸，就算作戰成功」；優先順序是神盾艦、飛彈庫存、不對稱作戰。</li>
+    <li><strong>日本是台灣安全的第二支柱，但台灣人對日本有太多幻想。</strong> 「日本沒有選擇介入或不介入的自由」，同時「在日本只有一個政府，就是東京」。</li>
+    <li><strong>台灣內部才是真正的木馬。</strong> 預算被砍、軍用設施公開招標、政黨對立、敵情意識不足；「台灣人沒有感覺，就是北京最大的成功」。</li>
+  </ol>
+</section>
+
+<section id="s3">
+  <h2><span class="num">03</span>結構：他每一題回答的實際順序</h2>
+  <p>把 10 份逐字稿裡的每一段回答並排，架構幾乎一致。這是一個真正的序列，前一步的產出是後一步的輸入。</p>
+  <ol class="steps">
+    <li class="step"><div class="n">0</div><div><h4>回扣主持人，並引用自己上次的預警</h4><p>先建立信用，再進入問題。</p><p class="ex"><b>原文</b>「我記得上個月來上節目的時候，其實我當時就有提出警告」「果不其然」</p></div></li>
+    <li class="step"><div class="n">1</div><div><h4>先澄清定義，或回到原文</h4><p>常帶著糾正媒體或「有心人士」誤讀的姿態。</p><p class="ex"><b>原文</b>「首先要澄清的，它是一個 MOU，它是一個意向書，它不是一個 agreement」「我們還是要倒帶一下，看一下岡田克也的問題」</p></div></li>
+    <li class="step"><div class="n">2</div><div><h4>先拋結論，附上信心用語</h4><p>信心分級用語氣而不是機率：「一定／絕對不可能」給結構或程序推論，「我的判斷是／非常有可能」給行為者行動，「不得而知」標記不可知。</p><p class="ex"><b>原文</b>「我覺得示弱的可能性很低」「這是必然會發生的事情」</p></div></li>
+    <li class="step"><div class="n">3</div><div><h4>以日期為索引，錨定文件與事件</h4><p>先講日期再講事。文本的證據等級高於言論與民調。</p><p class="ex"><b>原文</b>「今年的 5 月 14 號」「去年 12 月 5 號 2025 年版的美國國家安全戰略」「1971 年 6 月美日達成沖繩歸還協議」</p></div></li>
+    <li class="step"><div class="n">4</div><div><h4>結構與地理，常從歷史起點講起</h4><p>誰跟誰綁在一起，地理節點在哪裡。</p><p class="ex"><b>原文</b>「駐日美軍五萬多人，超過一半在沖繩，直線距離才 400 英里」「以前韓半島、東海、台海、南海是四個戰區，現在是單一戰區，台灣正好在正中央」</p></div></li>
+    <li class="step"><div class="n">5</div><div><h4>算各行為者的壓力與利益，再定意圖</h4><p>意圖歸因幾乎不單獨出現，永遠接在日期鏈與利益計算之後。</p><p class="ex"><b>原文</b>「航母打擊群靠這麼近造成的壓力，是由伊朗的民選政府來承受，革命衛隊不用負責」「該演的戲還是要演完」「抗拒不代表反對」</p></div></li>
+    <li class="step"><div class="n">6</div><div><h4>一到兩個數字做可行性否證</h4><p>兩個異質量體並列，然後下硬結論。數字集中在預算、軍售、裝備數量、庫存天數、兵力。</p><p class="ex"><b>原文</b>「戰力乘以六就是 12 萬大軍，駐沖繩美軍完全沒有回應動作，在軍事實務上是完全不可能的」「打了三週就把美國六年的飛彈庫存打光，縱使現在宣布，台灣也不會如期交付」</p></div></li>
+    <li class="step"><div class="n">7</div><div><h4>沿政治日曆推到下一個節點</h4><p>預測的骨架永遠是日期，引擎是對制度流程的掌握。</p><p class="ex"><b>原文</b>「9 月 24 去、25 回北京、10 月 1 日國慶、之後政治局會議定五中日期，從五中到明年 21 大，中國就進入戒嚴時期」</p></div></li>
+    <li class="step"><div class="n">8</div><div><h4>三分法或標籤收束</h4><p>三分法、階段論、「不是 A 是 B」的重新定義、以反問收尾施壓國內。</p><p class="ex"><b>原文</b>「三個主要的原因，第一……第二……第三」「蟒蛇戰略、刺蝟戰略」「這是兩回事」「台灣不配合嗎？」</p></div></li>
+  </ol>
+
+  <h3>他對四個主要行為者各有一個穩定模型</h3>
+  <div class="actors">
+    <div class="actor"><h4>中共</h4><p>理性但焦慮的施壓者。每個動作都是「談判籌碼」「破局」「找破口」「新底線」，趁對手內亂各個擊破。同時用反證法否定陰謀論：「要政變早就發生了。」</p></div>
+    <div class="actor"><h4>美國與川普</h4><p>策略連貫而非隨機。「他不是亂講的，他是有所本的」；打伊朗「超過一半的原因是針對中國」。特別重視「國會批准」與「行政權主導」的制度區別，據此判斷軍售不會被交易掉。</p></div>
+    <div class="actor"><h4>日本</h4><p>透過人事與派系看政策（親中派瓦解、安倍派回歸、留任八人全是對中強硬派），並以民意數字預測政策通過難度。</p></div>
+    <div class="actor"><h4>俄羅斯</h4><p>從國家利益推論。北韓與越南是俄箝制中共的支點；俄不樂見中共奪台；美國穩住格陵蘭之後「中俄的協作就沒有任何意義」。</p></div>
+  </div>
+
+  <h3>數字對比的典型用法</h3>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>對比</th><th>結論</th></tr></thead>
+      <tbody>
+        <tr><td>日本 GDP 約 4 兆美元 × 3% = 1200 億 vs. 俄羅斯 600 億</td><td>「根本做不到」</td></tr>
+        <tr><td>美以伊衝突兩週消耗 170 億美元精準彈藥 vs. 台灣半年國防預算</td><td>台灣必須自建庫存</td></tr>
+        <tr><td>川普首任 11 批 183 億 vs. 小布希八年 156 億 vs. 拜登四年 59 億</td><td>「這樣還不夠挺嗎」</td></tr>
+        <tr><td>攻守比三比一、渡海傷亡率五成 vs. 中國兩棲部隊 2 萬人</td><td>「不會有中國準備好武力犯台這件事」</td></tr>
+        <tr><td>台灣海纜年故障約 5 次 vs. 全球每條 0.1 至 0.2 次</td><td>高於全球 50 倍</td></tr>
+        <tr><td>天然氣法定儲量 11 至 14 天、儲油 90 天 vs. 日本儲油 250 天</td><td>能源是最脆弱環節</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="s4">
+  <h2><span class="num">04</span>九個只有逐字稿才看得到的手法</h2>
+  <p>這些在文字報導裡幾乎不會出現，卻是他判斷品質的來源。</p>
+  <div class="tech">
+    <div><h4>1. 文體與語用分析</h4><p>讀新版國安戰略：<q>第一次讀完覺得好像是假訊息，因為文字的使用跟以往所有美國安全文件完全不一樣，讀了第二次越讀越像川普總統的口吻，所以我才確定</q>。還會數「台灣提到八次、篇幅最長」、分三個時態。讀高市答詢：<q>日文是時態非常重的語言，她講「目前」遵守非核三原則，那個「目前」就被解讀成以後可能修改</q>。</p></div>
+    <div><h4>2. 程序知識是時間軸的引擎</h4><p>能推出「軍售延到 9 月 24 日後」，是因為熟悉對外軍售流程、日本修憲程序、國防授權法審理時程。用買車比喻發價書：<q>你沒講清楚要哪一型的 Camry，經銷商沒辦法報價</q>。</p></div>
+    <div><h4>3. 人脈情資與現地經驗</h4><p><q>去年夏天受美國印太司令部邀請，到沖繩嘉手納跟普天間基地訪問一週</q>、<q>這個我透過首相官邸的朋友得知</q>、<q>迪奇利基金會閉門會我也有參加</q>。而且會用這些推翻自己的判斷。</p></div>
+    <div><h4>4. 反事實檢驗</h4><p><q>縱使沒有日菲談 EEZ 這件事，中國海警跟海洋調查船都會去做他們該做的事，這是既定計畫</q>。用來區分真正的原因與表面的觸發。</p></div>
+    <div><h4>5. 言辭對程序</h4><p>判斷川習會有無實質內容，不看講話，看程序：<q>沒有 joint statement，會前要先打成共識、要有幕僚作業，什麼都沒有</q>。判斷川普是否挺台，不看用詞，看紀錄：<q>183 億是沒有爭議的，因為這些都有記錄</q>。</p></div>
+    <div><h4>6. 延後確認的紀律</h4><p><q>我一直等到 6 月份 G7 的時候我才確定了，美國已經沒有所謂印太戰略了</q>，因為依安倍慣例一定會有場邊會，今年沒有。判斷等到證據節點齊全才下。</p></div>
+    <div><h4>7. 軍事實務常識</h4><p><q>艦載機作戰半徑超過 700 公里，不用靠伊朗那麼近，所以航母靠近是為了談判</q>、<q>要從台灣撤 2 萬 5 千名日本僑民，日本根本沒有這種海空能量，他真正在做的是在台灣東部形成廊道反封鎖</q>。這是獨立於文本與數字的第三種證據。</p></div>
+    <div><h4>8. 同一張地圖疊合</h4><p><q>你把四次戰略警巡的位置放在同一個地圖看，就很清楚在封鎖台灣南邊</q>、<q>上半年沒有大型軍演，可是他化整為零變成五次行動</q>。分散事件疊在一起才看到型態。</p></div>
+    <div><h4>9. 明確標記不可知</h4><p><q>背後有沒有中國的意思要提前逼高市表態，這個我們不得而知</q>、<q>真的假的不重要，因為只要是獨裁者，就有非常高的可能性被刺殺</q>。意圖歸因有邊界，用結構取代無法驗證的細節。</p></div>
+  </div>
+</section>
+
+<section id="s5">
+  <h2><span class="num">05</span>專家直覺：從哪裡來，在哪裡失靈</h2>
+  <p>心理學上，專家直覺要成立需要兩個條件：環境有足夠的規律性，以及長期、快速、明確的回饋。日本防衛預算怎麼編、國會怎麼審、美國軍售怎麼走流程、安保文件幾年一修，這些都是高規律性的制度過程，而且每年都有結果可對。他讀了十五年以上，所以一看到「高市支持率 78 至 81%」就能直接推「1 月 27 日解散、可過半、9 兆日圓預算容易通過」，中間的推理已經自動化。</p>
+
+  <h3>他親口說的方法論</h3>
+  <blockquote class="i">
+    <p>「我完全不相信那些數據啊，不管從西方世界來的、從中國放出來的。第一個我非常重視的是專家直覺，就是 intuition。你不要告訴我說哪個單位又公佈什麼數據，那些其實我不太相信。因為我覺得專家直覺是在 social science，一旦他在特定的一個領域研究夠深入或夠久的時候，他就會有自己的直覺判斷，那我覺得那個是錢買不到的。這是第一個。然後第二個我們追求的是結構變因，不是那種 details，不是那種細節。」</p>
+    <cite>百靈果 The KK Show 369，2026 年 6 月，約 00:29</cite>
+  </blockquote>
+  <p>接著他用共軍人事變動示範什麼叫結構：苗華、何衛東在北京時與習近平意識形態接近，「可是一旦把你派去東部戰區當司令員，你變那邊的老大了，你就會有你自己的夥計，就有自己的利益，跟中南海的習近平在非常多的想法上就會開始產生 deviation。這是必然會發生的事情，這就是 structure」。結論是「這個跟那個什麼什麼人又怎麼了，全部都在我們的預判之內」。</p>
+  <p>他讀歷史也是同一套：「非常多人帶著很浪漫的歷史情懷在讀歷史，講到坂本龍馬就覺得怎麼會有這麼厲害的人。對我們來講，坂本龍馬這個名字跟這個人不重要，而是那個結構。」武士階級在幕末正好填補了「有戰鬥技能、讀過書、又是 outlaw、敢接觸外國人」的社會位置，清朝沒有這個階級所以變法不成。「我們要浪漫的時候可以浪漫，要認真分析的時候要把浪漫抽掉。」國策院選研究員的標準也是同一個詞：「讀到我們覺得你已經有專家直覺了，so we invite you。」</p>
+
+  <h3 id="s5b">命中與失準的分布，畫出直覺的邊界</h3>
+  <div class="hm">
+    <div class="hit">
+      <h4>命中：制度性、有時程的問題</h4>
+      <ul>
+        <li><span class="d">2023-08</span>岸田不讓步、日本轉更強硬</li>
+        <li><span class="d">2024-06</span>美國大選前中共不敢明助俄羅斯</li>
+        <li><span class="d">2024-11</span>川普外交延續性高、對中施壓</li>
+        <li><span class="d">2026-01</span>高市 1 月 27 日解散眾院並大勝</li>
+        <li><span class="d">2026-03</span>伊朗衝突「美國不會派地面部隊、會拖成低強度」</li>
+        <li><span class="d">2026-05</span>140 億軍售延到 9 月 24 日之後</li>
+        <li><span class="d">長期</span>直接犯台機率極低、灰區行動升高</li>
+      </ul>
+    </div>
+    <div class="miss">
+      <h4>失準：人事與選舉結果</h4>
+      <ul>
+        <li><span class="d">2024-10</span>石破茂當選後斷言「安保三文件難以為繼」「自衛隊不再通過台海」「習近平是最大贏家」，一年後方向全反</li>
+        <li><span class="d">2025-01</span>「台灣應不會在關稅第一或第二梯次」，4 月 2 日即被課 32%</li>
+        <li><span class="d">2025-09</span>「改革派出線可能性較高」，結果高市早苗當選</li>
+        <li><span class="d">2025-04</span>高市修憲「超過八成不可能」，後因內幕資訊改判</li>
+        <li><span class="d">2025-08</span>大罷免：結構判斷本來正確，被身邊人的熱情帶偏</li>
+      </ul>
+    </div>
+  </div>
+  <p>規律很清楚。當問題可以從文本、預算、行事曆推出來時他很準；當問題取決於少數人的選擇時他跟一般人差不多。這不是他的缺陷，而是所有專家直覺的通性。學習他的人要把這條邊界一起學進去。</p>
+
+  <h3 id="s5c">他自己講的一次失準：情緒壓過結構</h3>
+  <blockquote class="i">
+    <p>「我原來原始的看法，我認為這個不會成功，原因非常簡單，去年年初你才有一場非常大型的社會運動就是選舉，群眾被動員的能量已經被消耗掉了，才過半年又開始搞這種大型的社會動員運動，我覺得那個政治能量會不足。……我有一些朋友平常對政治完全沒興趣，竟然都跑去當義工，一直不斷的給我洗腦，我就一頓午餐吃了兩隻雞腿就被說服了。……結果出來我都不想出門了，實在太丟臉了。所以就違背我自己的專業判斷。」</p>
+    <cite>百靈果 The KK Show 369，約 00:25 至 00:27</cite>
+  </blockquote>
+  <p>這個案例的價值在於他的結構判斷是對的，失準來自同溫層的熱情。結構方法在群眾情緒與人物選擇上沒有優勢，而且分析者本人也會被情緒帶走。訓練計畫裡「事前驗屍」與「隔離情緒」兩條就是針對這個弱點。</p>
+
+  <h3>要避免複製的部分</h3>
+  <ul>
+    <li><strong>書面不回顧失誤，長篇談話會回顧，但偏重命中案例。</strong> 文字報導中，失準後的模式是「以結構不變論吸收誤差，用新一輪日曆推演覆蓋舊預測」。節目上會覆盤「3 月 23 日的判斷到目前為止都為真」，失準案例只在被追問或自己想講時出現。</li>
+    <li><strong>結構決定論的盲點。</strong> 「結構變因大於人物」是好的預設，但當定理用會低估人物層面的意外。</li>
+    <li><strong>數字不標來源。</strong> 對聽眾很有說服力，但無法被檢驗。</li>
+    <li><strong>意圖歸因過於整齊。</strong> 中共「每件事都是有計畫的」、川普「每件事都有所本」，這會把雜訊解讀成訊號。</li>
+  </ul>
+</section>
+
+<section id="s6">
+  <h2><span class="num">06</span>如何培養：結構能力與專家直覺的訓練計畫</h2>
+
+  <h3>先選對領域</h3>
+  <ul>
+    <li>選一個<strong>窄到你能讀完所有一手文件</strong>的領域。他的起點不是「印太」，是「日本防衛計畫大綱」這一份文件。</li>
+    <li>領域要有<strong>規律性與回饋</strong>：預算、法案、軍售、選舉時程、財報、標案都合格；「習近平在想什麼」不合格。</li>
+    <li>至少一種<strong>能直接讀一手資料的外語</strong>，而且讀到能分辨口吻與時態的程度。</li>
+    <li>一段<strong>實務經驗</strong>。他的海軍、賽車與創業經歷，讓他判斷軍事與產業問題時有作戰邏輯與成本感。</li>
+  </ul>
+
+  <h3>結構能力：12 個月刻意練習</h3>
+  <div class="phase s"><h4>第 1 至 3 個月：建立文本閱讀習慣</h4><ul>
+    <li>每週讀一份一手文件並寫一頁摘要：這份文件「鎖定」了什麼承諾、預算、時程、法源。</li>
+    <li>練「文本錨定」：對任何新聞先問「哪份官方文件已經決定了這件事？」找不到就下調權重。</li>
+    <li>讀第二次，注意口吻、時態、篇幅、提及次數，而不只是內容。</li>
+  </ul></div>
+  <div class="phase s"><h4>第 4 至 6 個月：結構圖、時間軸，並把程序學會</h4><ul>
+    <li>每個議題畫一張圖：行為者、制度連結、地理節點。</li>
+    <li>維護未來 18 個月的<strong>政治行事曆</strong>：選舉、峰會、會期、預算審查、法案到期日。</li>
+    <li>把領域的<strong>流程</strong>背下來：預算怎麼編、法案怎麼過、採購怎麼走、改組的法定時程。</li>
+    <li>練「日期串因果」與反事實：往前找 30 天內三個事件，判斷哪個是回應對象；再問「如果沒有 A，B 會不會照樣發生」。</li>
+  </ul></div>
+  <div class="phase s"><h4>第 7 至 9 個月：建立自己的數字庫</h4><ul>
+    <li>用試算表記下領域的 100 個關鍵數字並標明出處。</li>
+    <li>每週一次「異質對比」練習：把兩個看似不相關的數字放在一起，看能不能推出一個硬結論。</li>
+  </ul></div>
+  <div class="phase s"><h4>第 10 至 12 個月：練輸出格式</h4><ul>
+    <li>每個議題強迫輸出：一個三分法、一個階段論、一句「不是 A 是 B」、一句給決策者的反問。</li>
+    <li>結論先行，一句話講完，再給三個支撐。</li>
+    <li>找真實聽眾公開講。沒有聽眾的分析不會逼你把結構收斂。</li>
+  </ul></div>
+
+  <h3>專家直覺：用回饋循環壓縮時間</h3>
+  <p>直覺無法直接練，只能透過大量有回饋的判斷累積。可以做的是把回饋做得更密、更誠實。</p>
+  <div class="phase"><ol class="checklist">
+    <li><strong>預測日誌。</strong> 每次下判斷寫下依據的文本或數字，信心用百分比。三個月後批改。這是他沒有公開做的事，也是你能比他更快校準的地方。</li>
+    <li><strong>分類命中率。</strong> 把預測分成「制度／時程類」與「人事／選舉類」各自算，找到自己的直覺邊界，邊界外主動降低信心。</li>
+    <li><strong>每週一次事前驗屍。</strong> 對最有信心的判斷，寫出「如果一年後證明我錯了，最可能是因為什麼」。</li>
+    <li><strong>先做結構再允許直覺。</strong> 前兩年每個判斷都走完全部步驟；直覺與流程結論一致率超過八成，才開始信任直覺。</li>
+    <li><strong>接近決策端。</strong> 智庫實習、立委助理、產業協會、法人研究員，取得「真正在做決定的人看什麼數字」的隱性知識。</li>
+    <li><strong>經營人脈與現地經驗。</strong> 逐字稿顯示他改變判斷的主要來源不是新文件，而是「首相官邸的朋友」「印太司令部邀訪一週」。直覺的一部分是別人告訴你的。</li>
+    <li><strong>隔離情緒。</strong> 當你發現判斷在一頓飯之間改變，而沒有新的文件、數字或程序證據，把判斷改回去。</li>
+    <li><strong>五到十年的耐心。</strong> 他從 2009 年返台到 2023 年成為主流媒體固定來賓，中間十四年在讀防衛計畫大綱。</li>
+  </ol></div>
+
+  <h3>他明顯在追蹤的一手來源</h3>
+  <div class="tbl compact">
+    <table>
+      <thead><tr><th>國家</th><th>來源</th></tr></thead>
+      <tbody>
+        <tr><td>美國</td><td>National Security Strategy、National Defense Strategy、每年 NDAA 全文與台灣條款、DSCA 軍售通知、國會聽證證詞、印太司令部與駐韓美軍司令公開演講</td></tr>
+        <tr><td>日本</td><td>《防衛白書》、安保三文件、防衛省預算概算要求、國會答辯紀錄、自民黨派閥動態、各報內閣支持率</td></tr>
+        <tr><td>中共</td><td>全會公報、兩會政府工作報告、國台辦記者會、海警法與相關法規、國防部例行記者會、反國家分裂法相關司法解釋</td></tr>
+        <tr><td>台灣</td><td>國防部預算書與特別預算、立法院公報、海巡署公告、經濟部能源儲備數據</td></tr>
+        <tr><td>國際法</td><td>聯合國憲章、開羅宣言、舊金山和約、聯大 2758 號決議原文</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="s7">
+  <h2><span class="num">07</span>一句話版本</h2>
+  <blockquote class="s">
+    <p>郭育仁厲害的地方，是把「澄清定義、結論先行、讀文件與文體、畫結構、算利益、對行事曆與程序、比數字、用三分法講出來」做到自動化，只在一個窄領域做，並用人脈與現地經驗持續校正。他自己的說法是「專家直覺加結構變因，把浪漫抽掉」。想成為那樣的人，就是選一個窄領域、只讀一手文件、建自己的數字庫與時間軸、公開下判斷並誠實記錄對錯，然後給自己十年。</p>
+  </blockquote>
+</section>
+
+<section id="a1">
+  <h2><span class="num">附錄 A</span>播放清單 38 支影片</h2>
+  <p>播放清單「郭育仁 教授」。標記「非郭育仁」者為清單內與他無關或他僅代班主持的影片。編號 07、23、27、29、31、33、35、36、37、38 有節目方上傳的人工字幕，已轉成逐字稿並用於第二輪分析。</p>
+  <div class="tbl compact">
+    <table>
+      <thead><tr><th>#</th><th>節目</th><th>標題</th><th>時長</th><th>逐字稿</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">01</td><td>鄭弘儀 - 寶島全世界</td><td><a href="https://youtu.be/uw971NaMvog">石破茂提「亞洲版北約」，學者郭育仁虧：天方夜譚！  - 鄭弘儀 主持專訪 郭育仁 國策院副院長 -【寶島全世界】</a></td><td class="mono">56m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">02</td><td>鄭弘儀 - 寶島全世界</td><td><a href="https://youtu.be/T9GCeMFn6vI">拜柯林頓之賜 中國影響力已超越美國！  - 鄭弘儀 主持專訪 郭育仁 國策院副院長  -【寶島全世界】</a></td><td class="mono">50m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">03</td><td>鄭弘儀 - 寶島全世界</td><td><a href="https://youtu.be/PZkzasH6fOU">澤倫斯基在白宮“翻臉”是不得不演？美國若暫停軍援，烏軍撐不到七月？！ - 鄭弘儀 主持專訪 郭育仁 國策院副院長 -【寶島全世界】</a></td><td class="mono">55m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">04</td><td>鄭弘儀 - 寶島全世界</td><td><a href="https://youtu.be/paP4qtufg_4">今年台股是&quot;空頭的多頭&quot;？台積電今年股價會休息？ - 鄭弘儀 主持專訪 李鎮宇 台新金控首席經濟學家長 -【寶島全世界】 <em style="color:var(--ink-3)">（非郭育仁）</em></a></td><td class="mono">51m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">05</td><td>鄭弘儀 - 寶島全世界</td><td><a href="https://youtu.be/FTlav0FriNk">川普翻動世界秩序，劍指中國？認識川普的導師，透視其決策思路！ - 鄭弘儀 主持專訪 郭育仁 博士、國策院副院長 -【寶島全世界】</a></td><td class="mono">52m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">06</td><td>鄭弘儀 - 寶島全世界</td><td><a href="https://youtu.be/0_LsXITHUIo">川普上任是習近平最大的夢魘！台灣將加速武器化，國民黨也會受到施壓？！ - 鄭弘儀 主持專訪 郭育仁 國策院副院長 -【寶島全世界】</a></td><td class="mono">53m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">07</td><td>立法院演哪齣? Political Saga</td><td><a href="https://youtu.be/F-F2ug0qmQ4">中山大學教授郭育仁所長 發言 國會改革.國會聽證調查權.公聽會 20240411 司法法制委員會【立法院演哪齣？】</a></td><td class="mono">10m</td><td class="mono" style="color:var(--struct)">●</td></tr>
+        <tr><td class="mono">08</td><td>新聞大破解隨選</td><td><a href="https://youtu.be/gAm2vfi5yXU">不論誰是美國新總統 都讓中共緊張？蘇利文直球找張又俠對話為哪樁？地緣政治風向變 日菲都講大白話！烏軍攻進俄境內 加大中共壓力？西太平洋無美航母 防衛缺口？｜郭育仁｜新聞大破解 【2024年8月30日】</a></td><td class="mono">1h01m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">09</td><td>新聞大破解隨選</td><td><a href="https://youtu.be/1ypV6afmHMs">美大選選情拉鋸 刺激地緣緊張情勢？賴清德與前朝最大不同在？過去八年重兵部署歐洲 開花結果？日本新首相為何重用中谷元任防衛大臣？獨家解析中共之戰略溝通！｜郭育仁｜新聞大破解 【2024年10月9日】</a></td><td class="mono">51m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">10</td><td>新聞大破解隨選</td><td><a href="https://youtu.be/ZDZvjfG8kTg">普丁放假消息玩弄中共？獨家詳解美情報指中俄聯手對台！歐洲是中國經貿突破口？馬克宏嗆俄 習訪法埋陰招？中共灰區威脅 美國應考慮修改台灣關係法？｜明居正｜郭育仁｜新聞大破解 【2024年5月8日】</a></td><td class="mono">58m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">11</td><td>寶島聯播網</td><td><a href="https://youtu.be/oYds8-GQRew">【寶島全世界】川普汽車關稅一出，股市嚇崩！ 一刀一刀斷中國生產鏈，能救美國內經濟！？  來賓：李鎮宇博士 - 台新金控首席經濟學家｜郭育仁 代班主持 2025/3/28 <em style="color:var(--ink-3)">（非郭育仁）</em></a></td><td class="mono">57m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">12</td><td>寶島聯播網</td><td><a href="https://youtu.be/k95nXfv_zL0">【寶島全世界】「關稅戰」是美國要「脫歐入亞」？美再工業化：台灣壓力將更大，卻是 “轉骨”好機會？！來賓：郭育仁 國策院副院長 ｜ 主持人：鄭弘儀 2025/04/15</a></td><td class="mono">59m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">13</td><td>寶島聯播網</td><td><a href="https://youtu.be/V4wa7Do4JY8">【寶島全世界】中國環台軍演！演出習近平權力中心失衡？ 來賓：溫約瑟 軍事觀察家｜郭育仁 代班主持 2025/04/03</a></td><td class="mono">59m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">14</td><td>寶島聯播網</td><td><a href="https://youtu.be/VsqM_enZSeA">【寶島全世界】烏俄停火！ 普丁逼澤倫斯基下台？ 歐洲如何善後烏俄戰事？  來賓：王宏仁 國策院執行長｜郭育仁 代班主持 2025/04/04</a></td><td class="mono">58m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">15</td><td>新聞大破解隨選</td><td><a href="https://youtu.be/TmWM4YuHExk">為何川普選此時對中攤牌？美國國家大戰略在轉變！不可能持久戰 中共報復是為跟美國談判？美盟友將自動歸隊 但歐盟不一定？不只選邊 台灣如何準確定位？｜明居正｜郭育仁｜新聞大破解 【2025年4月11日】</a></td><td class="mono">54m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">16</td><td>寶島聯播網</td><td><a href="https://youtu.be/b-idan5AwWs">【寶島全世界】中共是否攻台，端看台灣國防準備程度？！ 韓總統李在明再親中，也無法隨心所欲？｜ 來賓：郭育仁 國策院副院長｜鄭弘儀主持 2025/06/05</a></td><td class="mono">1h00m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">17</td><td>TVBS財經</td><td><a href="https://youtu.be/p72SFcuBVek">2025-6-19「地緣政治新秩序：從晶片到關稅的美中台三角競局」座談會</a></td><td class="mono">1h57m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">18</td><td>鏡週刊</td><td><a href="https://youtu.be/xCZ9QeocIxQ">【2025台美經濟新局高峰論壇】川普推動美國優先三3支箭　台經院：經濟格局分三圈台灣位處交會處｜鏡週刊</a></td><td class="mono">23m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">19</td><td>鄭弘儀 - 寶島全世界</td><td><a href="https://youtu.be/Re172q2IHmc">川普將國際政治當實境秀現場！？恢復烏克蘭軍援竟是老婆的一句話？ - 鄭弘儀 主持專訪 郭育仁 國策院副院長  -【寶島全世界】</a></td><td class="mono">51m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">20</td><td>新聞大破解隨選</td><td><a href="https://youtu.be/UQQltvY7wVw">不甩國際政治遊戲規則 川普如何打中共？跨界玩家贏面在哪？印度在美俄間玩弄兩手外交 急於結束俄烏戰的川普會屈服？四川江油抗暴 中國人民正在起義！｜明居正｜郭育仁｜新聞大破解 【2025年8月8日】</a></td><td class="mono">51m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">21</td><td>快樂聯播網</td><td><a href="https://youtu.be/igfOWXsGZng">快樂心聲 20250915 國策院副院長 郭育仁 | 全球與印太戰略變局</a></td><td class="mono">35m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">22</td><td>新聞大破解</td><td><a href="https://youtu.be/thwZ8Ei4Ctw">用台灣關係法取代美台盟約！軍售條款讓美台進可攻退可守！獨家詳解從安倍到岸田「美日共同防衛台灣」戰略歷史脈絡！為何美國鴿派也轉強硬？｜郭育仁｜王宏仁｜新聞大破解 【2024年4月10日】</a></td><td class="mono">1h06m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">23</td><td>新聞大破解隨選</td><td><a href="https://youtu.be/aGriVz8wUUs">CCP&#x27;s &quot;wolf warrior&quot; diplomacy becomes an ally! Sanae&#x27;s approval rating in Kaohsiung skyrockets t...</a></td><td class="mono">50m</td><td class="mono" style="color:var(--struct)">●</td></tr>
+        <tr><td class="mono">24</td><td>Lazo Velko</td><td><a href="https://youtu.be/7fGB-hjc2Gc">The worst programming language of all time <em style="color:var(--ink-3)">（非郭育仁）</em></a></td><td class="mono">2h09m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">25</td><td>寶島聯播網</td><td><a href="https://youtu.be/M6RwyxYoOCg">【寶島全世界】雙城論壇才送&quot;錫盤子&quot;，今天中回贈“萬安演習&quot;打臉蔣市長？！  中共正義使命環台軍演 明日準備「無限高」！｜來賓：郭育仁 國策院副院長 ｜  鄭弘儀主持 2025/12/29</a></td><td class="mono">56m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">26</td><td>話時代人物</td><td><a href="https://youtu.be/pfOMTjq8RtI">【完整版】武統台灣? 解放軍戰力大解析 台灣「全球最難進攻國」 天險地緣戰略 解盲共軍攻勢與台灣「鋼鐵豪豬」不對稱戰略｜話時代人物｜鄭弘儀 主持｜20260111｜三立新聞台</a></td><td class="mono">49m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">27</td><td>新聞大破解隨選</td><td><a href="https://youtu.be/Fk_tGMOx1bw">Trump&#x27;s bombshell rebuke skepticism: Largest arms sale to Taiwan in 25 years! More Taiwanese offi...</a></td><td class="mono">47m</td><td class="mono" style="color:var(--struct)">●</td></tr>
+        <tr><td class="mono">28</td><td>鄭弘儀 - 寶島全世界</td><td><a href="https://youtu.be/8zTlRREPmGY">川普鎖中&quot;快、狠、準&quot;中國攻台前，必先打日本？！ - 矢板明夫 主持專訪 郭育仁 國策院副院長 -【寶島全世界】</a></td><td class="mono">53m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">29</td><td>新聞大破解隨選</td><td><a href="https://youtu.be/fCPlt8iWB_w">爆料！盧比歐向台灣說明 川習會期間由他回應台灣議題！川普任內對台軍售最高！立院砍預算恐導致第二波軍售延宕？高市修憲策略曝光 日本明年決戰公投！｜郭育仁｜新聞大破解【2026年5月18日】</a></td><td class="mono">49m</td><td class="mono" style="color:var(--struct)">●</td></tr>
+        <tr><td class="mono">30</td><td>寶島聯播網</td><td><a href="https://youtu.be/s902Fu9N-Xg">【寶島全世界】習近平開放市場、大買美商品，換川普一句：&quot;不希望&quot;台獨？！  美對台軍售也是制中籌碼？！ 來賓：郭育仁博士 國策院副院長 ｜ 鄭弘儀主持 2026/05/18</a></td><td class="mono">56m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">31</td><td>新聞大破解隨選</td><td><a href="https://youtu.be/AVf5HI9F2Yc">荷姆茲海峽將恢復通航？以色列願意放手停火？中東俄烏進收尾階段 西方盟國下一個對付誰？中共闖太平島禁止水域 四海點火惹怒各國！｜郭育仁｜新聞大破解【2026年6月15日】</a></td><td class="mono">50m</td><td class="mono" style="color:var(--struct)">●</td></tr>
+        <tr><td class="mono">32</td><td>TIA台灣勵志協會</td><td><a href="https://youtu.be/U4CW3YrljDs">20260704_郭育仁演講《台灣總體國家安全情勢評估》</a></td><td class="mono">1h56m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">33</td><td>新聞大破解隨選</td><td><a href="https://youtu.be/HnnNoCvcfrE">Iran Opens Fire Again, U.S. Dual Carriers Move In! PRC Forces Pulling the Strings? Eyeing Batanes...</a></td><td class="mono">50m</td><td class="mono" style="color:var(--struct)">●</td></tr>
+        <tr><td class="mono">34</td><td>寶島聯播網</td><td><a href="https://youtu.be/V8topwLbk-U">【寶島全世界】川習會前美中都在下一盤大棋！ 中國內部已實質戒嚴？！李在明是韓版馬英九？  來賓：郭育仁 國策院副院長｜鄭弘儀 主持 2026/09/18</a></td><td class="mono">58m</td><td class="mono" style="color:var(--struct)"></td></tr>
+        <tr><td class="mono">35</td><td>新聞大破解隨選</td><td><a href="https://youtu.be/FHyHVZ7njUU">川習會前夕美國狠斷中共後路！川普閃簽格陵蘭安全協議！北京嚇傻！高市早苗大勝後改組內閣！鐵娘子抗共路線全面啟動？｜郭育仁｜新聞大破解【2026年9月21日】</a></td><td class="mono">50m</td><td class="mono" style="color:var(--struct)">●</td></tr>
+        <tr><td class="mono">36</td><td>百靈果News</td><td><a href="https://youtu.be/-b4aF1uf-q4">The KK Show 369- 中美航母大對決 郭育仁教授 (CC AI字幕)</a></td><td class="mono">1h43m</td><td class="mono" style="color:var(--struct)">●</td></tr>
+        <tr><td class="mono">37</td><td>Métis 思傳媒</td><td><a href="https://youtu.be/cbXEOa8jEy8">【南得聊聊】EP3第二次川習會登場！美國放棄印太戰略，台灣竟是最大贏家？</a></td><td class="mono">49m</td><td class="mono" style="color:var(--struct)">●</td></tr>
+        <tr><td class="mono">38</td><td>Métis 思傳媒</td><td><a href="https://youtu.be/AayORIPWlVE">[Strategic Forecast] EP1: Will Trump and Xi &quot;Sell Out&quot; Taiwan? Does Beijing Really Have Leverage ...</a></td><td class="mono">25m</td><td class="mono" style="color:var(--struct)">●</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="a2">
+  <h2><span class="num">附錄 B</span>主要文字來源</h2>
+  <details open>
+    <summary>國策研究院座談紀錄</summary>
+    <ul class="src">
+      <li><a href="https://www.inpr.org.tw/activityDetail/266?lang=zh-tw">2024-10 日本眾院大選</a></li>
+      <li><a href="https://www.inpr.org.tw/activityDetail/305?lang=zh-tw">2025-07 日本參院選後</a></li>
+      <li><a href="https://www.inpr.org.tw/activityDetail/316?lang=zh-tw">2025-10 高市上任</a></li>
+      <li><a href="https://www.inpr.org.tw/activityDetail/317?lang=zh-tw">2025-10 四中全會</a></li>
+      <li><a href="https://www.inpr.org.tw/activityDetail/323?lang=zh-tw">2026-01 川普執政周年</a></li>
+      <li><a href="https://www.inpr.org.tw/activityDetail/329?lang=zh-tw">2026-02 國防特別預算</a></li>
+      <li><a href="https://www.inpr.org.tw/activityDetail/333?lang=zh-tw">2026-04 美以伊衝突</a></li>
+      <li><a href="https://www.inpr.org.tw/activityDetail/336?lang=zh-tw">2026-05 川習會</a></li>
+    </ul>
+  </details>
+  <details>
+    <summary>中央社</summary>
+    <ul class="src">
+      <li><a href="https://www.cna.com.tw/tag/30419/">郭育仁全部報導索引</a></li>
+      <li><a href="https://www.cna.com.tw/news/aipl/202411060420.aspx">2024-11 結構變因大於總統是誰</a></li>
+      <li><a href="https://www.cna.com.tw/news/aipl/202409010194.aspx">2024-09 法律戰三步驟</a></li>
+      <li><a href="https://www.cna.com.tw/news/aipl/202504040146.aspx">2025-04 關稅三層級</a></li>
+      <li><a href="https://www.cna.com.tw/news/aipl/202507210088.aspx">2025-07 自民黨消長三態</a></li>
+      <li><a href="https://www.cna.com.tw/news/aipl/202510220219.aspx">2025-10 高市上任、GDP 3% 根本做不到</a></li>
+      <li><a href="https://www.cna.com.tw/news/aipl/202602090088.aspx">2026-02 高市大勝解析</a></li>
+      <li><a href="https://www.cna.com.tw/news/aipl/202607160166.aspx">2026-07 沒有印太了、擊殺網</a></li>
+      <li><a href="https://www.cna.com.tw/news/aipl/202609260098.aspx">2026-09 二次川習會</a></li>
+    </ul>
+  </details>
+  <details>
+    <summary>大紀元與新唐人</summary>
+    <ul class="src">
+      <li><a href="https://www.epochtimes.com/b5/23/8/28/n14062823.htm">2023-08 核廢水、美日韓結構化</a></li>
+      <li><a href="https://www.ntdtv.com.tw/b5/20231216/video/380118.html">2023-12 台灣最難打戰場、內部木馬</a></li>
+      <li><a href="https://www.ntdtv.com.tw/b5/20240727/video/395317.html">2024-07 法律戰三階段</a></li>
+      <li><a href="https://www.ntdtv.com.tw/b5/20241107/video/399512.html">2024-11 川普當選、60% 關稅有所本</a></li>
+      <li><a href="https://www.epochtimes.com/b5/25/9/1/n14585610.htm">2025-09 九三閱兵五大意圖</a></li>
+      <li><a href="https://www.ntdtv.com.tw/b5/20251120/video/406041.html">2025-11 骨牌效應、南部後勤廊道</a></li>
+      <li><a href="https://www.epochtimes.com/gb/26/7/7/n14804909.htm">2026-07 總體國家安全情勢評估演講</a></li>
+    </ul>
+  </details>
+  <details>
+    <summary>其他媒體</summary>
+    <ul class="src">
+      <li><a href="https://news.ltn.com.tw/news/politics/breakingnews/5414422">自由時報 2026-04 飛彈庫存、170 億對比</a></li>
+      <li><a href="https://news.ltn.com.tw/news/politics/breakingnews/5438185">自由時報 2026-05 軍售 9/24、7800 億滿盤皆輸</a></li>
+      <li><a href="https://news.ltn.com.tw/news/politics/breakingnews/5507161">自由時報 2026-07 美國防戰略已無印太</a></li>
+      <li><a href="https://udn.com/news/story/124877/9505461">聯合報 2026-05 川習四會框架</a></li>
+      <li><a href="https://www.businesstoday.com.tw/article/category/183027/post/202607040010/">今周刊 2026-07 蟒蛇戰略、無感到絕望</a></li>
+      <li><a href="https://www.twreporter.org/a/taiwanyuji-first-island-chain-military-movement-multimedia">報導者 2023-10 日本沒有選擇的自由</a></li>
+      <li><a href="https://www.taipeitimes.com/News/taiwan/archives/2026/09/16/2003864355">Taipei Times 2026-09 沖繩選舉與西南諸島</a></li>
+      <li><a href="https://www.sef.org.tw/article-1-129-5237">交流雜誌 2014 早期推理範例</a></li>
+    </ul>
+  </details>
+  <details>
+    <summary>學術背景</summary>
+    <ul class="src">
+      <li><a href="https://icaps.nsysu.edu.tw/p/405-1131-359095,c1687.php?Lang=zh-tw">中山大學中國與亞太區域研究所師資頁</a></li>
+      <li><a href="https://cfjs.nsysu.edu.tw/p/412-1139-7690.php?Lang=zh-tw">中山大學日本研究中心主任頁</a></li>
+      <li><a href="https://www.asiapacific.ca/about-us/research-staff/yujen-kuo">加拿大亞太基金會簡介</a></li>
+      <li><a href="https://www.jiia.or.jp/en/abus/experts/VisitingFellow2019-2010.php">日本國際問題研究所訪問研究員名單</a></li>
+      <li><a href="https://www.airitilibrary.com/Publication/alDetailedMesh?docid=10232869-201612-201701260007-201701260007-53-77">《政治學報》2016 論文摘要</a></li>
+    </ul>
+  </details>
+  <p class="foot">逐字稿來自節目方上傳的人工字幕，引文保留口語原貌，僅去除時間戳與重複字幕。本頁的判斷是對公開發言的歸納，不代表當事人立場。</p>
+</section>
+
+</main>
+</div>
+</div>
